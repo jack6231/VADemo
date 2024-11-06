@@ -1,0 +1,6 @@
+framework module Pods_VADemoTests {
+  umbrella header "Pods-VADemoTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

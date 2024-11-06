@@ -16,6 +16,11 @@
 		04D5497F2CDB3FDE00CCE517 /* VADemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D5497E2CDB3FDE00CCE517 /* VADemoTests.swift */; };
 		04D549892CDB3FDE00CCE517 /* VADemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D549882CDB3FDE00CCE517 /* VADemoUITests.swift */; };
 		04D5498B2CDB3FDE00CCE517 /* VADemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D5498A2CDB3FDE00CCE517 /* VADemoUITestsLaunchTests.swift */; };
+		04E1D4012CDB4D1200B42BFB /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E1D4002CDB4D1200B42BFB /* AudioEngine.swift */; };
+		04E1D4032CDB4EA400B42BFB /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E1D4022CDB4EA400B42BFB /* AudioPlayer.swift */; };
+		316069436E37856AC2C2E5B7 /* Pods_VADemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823DDF7C6EC8B3B46F917B83 /* Pods_VADemo.framework */; };
+		32BA74BFAB6768F94FEED401 /* Pods_VADemo_VADemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FA68D3CD21E01BFED74C7D /* Pods_VADemo_VADemoUITests.framework */; };
+		A38EC32116F05C9F47233391 /* Pods_VADemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFC8A2FC7E9EEFBA77AF1F6 /* Pods_VADemoTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04A21D302CDB47CC005B138A /* Masonry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Masonry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D549642CDB3FDD00CCE517 /* VADemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VADemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D549672CDB3FDD00CCE517 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D549692CDB3FDD00CCE517 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +55,17 @@
 		04D549842CDB3FDE00CCE517 /* VADemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VADemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D549882CDB3FDE00CCE517 /* VADemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADemoUITests.swift; sourceTree = "<group>"; };
 		04D5498A2CDB3FDE00CCE517 /* VADemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		04E1D4002CDB4D1200B42BFB /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		04E1D4022CDB4EA400B42BFB /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		44C521CA1EEFA5DCFEEE29B1 /* Pods-VADemo-VADemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VADemo-VADemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-VADemo-VADemoUITests/Pods-VADemo-VADemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		4FFC8A2FC7E9EEFBA77AF1F6 /* Pods_VADemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VADemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		823DDF7C6EC8B3B46F917B83 /* Pods_VADemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VADemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D3D265DCD04BB36512BE2FE /* Pods-VADemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VADemoTests.release.xcconfig"; path = "Target Support Files/Pods-VADemoTests/Pods-VADemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		A8C4974DAECECA2D76A61D6F /* Pods-VADemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VADemoTests.debug.xcconfig"; path = "Target Support Files/Pods-VADemoTests/Pods-VADemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A98D274BFF51D2505CBB788C /* Pods-VADemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VADemo.release.xcconfig"; path = "Target Support Files/Pods-VADemo/Pods-VADemo.release.xcconfig"; sourceTree = "<group>"; };
+		D9FA68D3CD21E01BFED74C7D /* Pods_VADemo_VADemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VADemo_VADemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAF2BB370BB3C01CF32117CD /* Pods-VADemo-VADemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VADemo-VADemoUITests.release.xcconfig"; path = "Target Support Files/Pods-VADemo-VADemoUITests/Pods-VADemo-VADemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		DC6404FD027C0485A33DB108 /* Pods-VADemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VADemo.debug.xcconfig"; path = "Target Support Files/Pods-VADemo/Pods-VADemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				316069436E37856AC2C2E5B7 /* Pods_VADemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A38EC32116F05C9F47233391 /* Pods_VADemoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32BA74BFAB6768F94FEED401 /* Pods_VADemo_VADemoUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +103,8 @@
 				04D5497D2CDB3FDE00CCE517 /* VADemoTests */,
 				04D549872CDB3FDE00CCE517 /* VADemoUITests */,
 				04D549652CDB3FDD00CCE517 /* Products */,
+				EF73C4AED6A101F7421AAF84 /* Pods */,
+				959195E281AA05B84D4186D4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +121,7 @@
 		04D549662CDB3FDD00CCE517 /* VADemo */ = {
 			isa = PBXGroup;
 			children = (
+				04E1D3FA2CDB4C4700B42BFB /* VA */,
 				04D549672CDB3FDD00CCE517 /* AppDelegate.swift */,
 				04D549692CDB3FDD00CCE517 /* SceneDelegate.swift */,
 				04D5496B2CDB3FDD00CCE517 /* ViewController.swift */,
@@ -127,6 +150,39 @@
 			path = VADemoUITests;
 			sourceTree = "<group>";
 		};
+		04E1D3FA2CDB4C4700B42BFB /* VA */ = {
+			isa = PBXGroup;
+			children = (
+				04E1D4002CDB4D1200B42BFB /* AudioEngine.swift */,
+				04E1D4022CDB4EA400B42BFB /* AudioPlayer.swift */,
+			);
+			path = VA;
+			sourceTree = "<group>";
+		};
+		959195E281AA05B84D4186D4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				04A21D302CDB47CC005B138A /* Masonry.framework */,
+				823DDF7C6EC8B3B46F917B83 /* Pods_VADemo.framework */,
+				D9FA68D3CD21E01BFED74C7D /* Pods_VADemo_VADemoUITests.framework */,
+				4FFC8A2FC7E9EEFBA77AF1F6 /* Pods_VADemoTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EF73C4AED6A101F7421AAF84 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DC6404FD027C0485A33DB108 /* Pods-VADemo.debug.xcconfig */,
+				A98D274BFF51D2505CBB788C /* Pods-VADemo.release.xcconfig */,
+				44C521CA1EEFA5DCFEEE29B1 /* Pods-VADemo-VADemoUITests.debug.xcconfig */,
+				DAF2BB370BB3C01CF32117CD /* Pods-VADemo-VADemoUITests.release.xcconfig */,
+				A8C4974DAECECA2D76A61D6F /* Pods-VADemoTests.debug.xcconfig */,
+				8D3D265DCD04BB36512BE2FE /* Pods-VADemoTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,9 +190,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04D5498E2CDB3FDE00CCE517 /* Build configuration list for PBXNativeTarget "VADemo" */;
 			buildPhases = (
+				AD5BE855BD7D7373B20D6E46 /* [CP] Check Pods Manifest.lock */,
 				04D549602CDB3FDD00CCE517 /* Sources */,
 				04D549612CDB3FDD00CCE517 /* Frameworks */,
 				04D549622CDB3FDD00CCE517 /* Resources */,
+				21BAA122D7883DD59E18C895 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -151,6 +209,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04D549912CDB3FDE00CCE517 /* Build configuration list for PBXNativeTarget "VADemoTests" */;
 			buildPhases = (
+				1104F7A1EE0BD626824F60AF /* [CP] Check Pods Manifest.lock */,
 				04D549762CDB3FDE00CCE517 /* Sources */,
 				04D549772CDB3FDE00CCE517 /* Frameworks */,
 				04D549782CDB3FDE00CCE517 /* Resources */,
@@ -169,9 +228,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04D549942CDB3FDE00CCE517 /* Build configuration list for PBXNativeTarget "VADemoUITests" */;
 			buildPhases = (
+				931990B7F9FAD7BBF7729E9E /* [CP] Check Pods Manifest.lock */,
 				04D549802CDB3FDE00CCE517 /* Sources */,
 				04D549812CDB3FDE00CCE517 /* Frameworks */,
 				04D549822CDB3FDE00CCE517 /* Resources */,
+				8690D72DA7243C25A27DFBCA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,6 +314,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1104F7A1EE0BD626824F60AF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VADemoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		21BAA122D7883DD59E18C895 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VADemo/Pods-VADemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VADemo/Pods-VADemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VADemo/Pods-VADemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8690D72DA7243C25A27DFBCA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VADemo-VADemoUITests/Pods-VADemo-VADemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VADemo-VADemoUITests/Pods-VADemo-VADemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VADemo-VADemoUITests/Pods-VADemo-VADemoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		931990B7F9FAD7BBF7729E9E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VADemo-VADemoUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AD5BE855BD7D7373B20D6E46 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VADemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		04D549602CDB3FDD00CCE517 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -260,6 +424,8 @@
 			files = (
 				04D5496C2CDB3FDD00CCE517 /* ViewController.swift in Sources */,
 				04D549682CDB3FDD00CCE517 /* AppDelegate.swift in Sources */,
+				04E1D4032CDB4EA400B42BFB /* AudioPlayer.swift in Sources */,
+				04E1D4012CDB4D1200B42BFB /* AudioEngine.swift in Sources */,
 				04D5496A2CDB3FDD00CCE517 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,12 +603,14 @@
 		};
 		04D5498F2CDB3FDE00CCE517 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC6404FD027C0485A33DB108 /* Pods-VADemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HM2XFJ76LK;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VADemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -450,12 +618,13 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Trucker-Path-Pro-Dev.VADemo";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Trucker-Path-Pro-Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -465,12 +634,14 @@
 		};
 		04D549902CDB3FDE00CCE517 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A98D274BFF51D2505CBB788C /* Pods-VADemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HM2XFJ76LK;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VADemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -478,12 +649,13 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Trucker-Path-Pro-Dev.VADemo";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Trucker-Path-Pro-Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -493,6 +665,7 @@
 		};
 		04D549922CDB3FDE00CCE517 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8C4974DAECECA2D76A61D6F /* Pods-VADemoTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -513,6 +686,7 @@
 		};
 		04D549932CDB3FDE00CCE517 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D3D265DCD04BB36512BE2FE /* Pods-VADemoTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -533,6 +707,7 @@
 		};
 		04D549952CDB3FDE00CCE517 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 44C521CA1EEFA5DCFEEE29B1 /* Pods-VADemo-VADemoUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -551,6 +726,7 @@
 		};
 		04D549962CDB3FDE00CCE517 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DAF2BB370BB3C01CF32117CD /* Pods-VADemo-VADemoUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
