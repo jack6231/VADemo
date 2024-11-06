@@ -70,12 +70,10 @@ class AudioEngine: NSObject {
         }
         if inputFormat.sampleRate != outputFormat.sampleRate {
             let userInfo = [NSLocalizedDescriptionKey :  "Sample Rate Error", NSLocalizedFailureReasonErrorKey : "Voice Assistant Audio Engine inputFormat.sampleRate != outputFormat.sampleRate when install tap"]
-            let error = NSError(domain: "Truckerpath", code: -9990, userInfo: userInfo)
             return
         }
         guard outputFormat.sampleRate > 0, outputFormat.channelCount > 0 else {
             let userInfo = [NSLocalizedDescriptionKey :  "Sample Rate Error", NSLocalizedFailureReasonErrorKey : "Assistant Audio outputFormat is not available"]
-            let error = NSError(domain: "Truckerpath", code: -9990, userInfo: userInfo)
             return
         }
         currentOutputFormat = outputFormat

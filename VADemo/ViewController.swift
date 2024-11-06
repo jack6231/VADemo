@@ -30,33 +30,6 @@ class ViewController: UIViewController {
         return button
     }()
     
-    private lazy var activeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("获取焦点", for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 8
-        button.addTarget(self, action: #selector(clickActiveButton(sender:)), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var deactiveButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("释放焦点", for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 8
-        button.addTarget(self, action: #selector(clickDeactiveButton(sender:)), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var settingButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("设置分类", for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 8
-        button.addTarget(self, action: #selector(clickSettingButton(sender:)), for: .touchUpInside)
-        return button
-    }()
-    
     private lazy var audioEngine = AudioEngine()
     private lazy var audioPlayer = AudioPlayer()
     
@@ -67,30 +40,12 @@ class ViewController: UIViewController {
     
     private func setupUI() {
         
-        view.addSubview(settingButton)
-        view.addSubview(activeButton)
-        view.addSubview(deactiveButton)
+
         view.addSubview(recordButton)
         view.addSubview(playButton)
-        
-        settingButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(80)
-            make.left.equalToSuperview().inset(20)
-            make.width.equalTo(100)
-            make.height.equalTo(40)
-        }
-        activeButton.snp.makeConstraints { make in
-            make.top.equalTo(settingButton)
-            make.left.equalTo(settingButton.snp.right).offset(20)
-            make.width.height.equalTo(settingButton)
-        }
-        deactiveButton.snp.makeConstraints { make in
-            make.top.equalTo(settingButton)
-            make.left.equalTo(activeButton.snp.right).offset(20)
-            make.width.height.equalTo(settingButton)
-        }
+
         recordButton.snp.makeConstraints { make in
-            make.top.equalTo(settingButton.snp.bottom).offset(20)
+            make.top.equalToSuperview().offset(100)
             make.left.equalToSuperview().offset(20)
             make.width.equalTo(100)
             make.height.equalTo(40)
@@ -122,34 +77,12 @@ class ViewController: UIViewController {
     @objc private func clickPlayButton(sender: UIButton) {
         audioEngine.stop()
         do {
-            print("345======== set category playAndRecord")
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .voicePrompt)
+            print("345======== set category playback")
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .voicePrompt, options: [.duckOthers])
         } catch {
-            print("345======== set category playAndRecord 失败: \(error)")
+            print("345======== set category playback 失败: \(error)")
         }
-        DispatchQueue.global().async {
-            self.audioPlayer.ttsPlayWith(voiceText: "Thank you for your valuable time, see you next time!")
-        }
-    }
-    
-    @objc private func clickSettingButton(sender: UIButton) {
-        
-    }
-    
-    @objc private func clickActiveButton(sender: UIButton) {
-        do {print("345======== set active true")
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("345======== set active true 失败: \(error)")
-        }
-    }
-    
-    @objc private func clickDeactiveButton(sender: UIButton) {
-        do {print("345======== set active false")
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-        } catch {
-            print("345======== set active false 失败: \(error)")
-        }
+        self.audioPlayer.ttsPlayWith(voiceText: "Thank you for your valuable time, see you next time!")
     }
     
 }

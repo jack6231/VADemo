@@ -46,6 +46,13 @@ extension AudioPlayer: AVSpeechSynthesizerDelegate {
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         print("345======== 语音播报完成")
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // 延迟 1 秒
+            do {
+                print("345======== set active false")
+                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            } catch {
+                print("345======== set active false error:\(error)")
+            }
+        }
     }
 }
