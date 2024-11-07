@@ -76,13 +76,16 @@ class ViewController: UIViewController {
     
     @objc private func clickPlayButton(sender: UIButton) {
         audioEngine.stop()
+        AVAudioSession.printAudioSessionProperties()
         do {
             print("345======== set category playback")
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .voicePrompt, options: [.duckOthers])
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers, .duckOthers])
         } catch {
             print("345======== set category playback 失败: \(error)")
         }
+        AVAudioSession.printAudioSessionProperties()
         self.audioPlayer.ttsPlayWith(voiceText: "Thank you for your valuable time, see you next time!")
+        
     }
     
 }

@@ -18,6 +18,7 @@
 		04D5498B2CDB3FDE00CCE517 /* VADemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D5498A2CDB3FDE00CCE517 /* VADemoUITestsLaunchTests.swift */; };
 		04E1D4012CDB4D1200B42BFB /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E1D4002CDB4D1200B42BFB /* AudioEngine.swift */; };
 		04E1D4032CDB4EA400B42BFB /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E1D4022CDB4EA400B42BFB /* AudioPlayer.swift */; };
+		04E1D4052CDC60D000B42BFB /* AudioSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E1D4042CDC60D000B42BFB /* AudioSession.swift */; };
 		316069436E37856AC2C2E5B7 /* Pods_VADemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823DDF7C6EC8B3B46F917B83 /* Pods_VADemo.framework */; };
 		32BA74BFAB6768F94FEED401 /* Pods_VADemo_VADemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FA68D3CD21E01BFED74C7D /* Pods_VADemo_VADemoUITests.framework */; };
 		A38EC32116F05C9F47233391 /* Pods_VADemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFC8A2FC7E9EEFBA77AF1F6 /* Pods_VADemoTests.framework */; };
@@ -57,6 +58,7 @@
 		04D5498A2CDB3FDE00CCE517 /* VADemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		04E1D4002CDB4D1200B42BFB /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		04E1D4022CDB4EA400B42BFB /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		04E1D4042CDC60D000B42BFB /* AudioSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSession.swift; sourceTree = "<group>"; };
 		44C521CA1EEFA5DCFEEE29B1 /* Pods-VADemo-VADemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VADemo-VADemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-VADemo-VADemoUITests/Pods-VADemo-VADemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4FFC8A2FC7E9EEFBA77AF1F6 /* Pods_VADemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VADemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		823DDF7C6EC8B3B46F917B83 /* Pods_VADemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VADemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +157,7 @@
 			children = (
 				04E1D4002CDB4D1200B42BFB /* AudioEngine.swift */,
 				04E1D4022CDB4EA400B42BFB /* AudioPlayer.swift */,
+				04E1D4042CDC60D000B42BFB /* AudioSession.swift */,
 			);
 			path = VA;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				04E1D4032CDB4EA400B42BFB /* AudioPlayer.swift in Sources */,
 				04E1D4012CDB4D1200B42BFB /* AudioEngine.swift in Sources */,
 				04D5496A2CDB3FDD00CCE517 /* SceneDelegate.swift in Sources */,
+				04E1D4052CDC60D000B42BFB /* AudioSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

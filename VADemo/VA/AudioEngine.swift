@@ -107,6 +107,10 @@ class AudioEngine: NSObject {
     //audio route 更换
     @objc private func audioSessionRouteChanged(noti: Notification) {
         print("345======== audio engine route change")
+        let outputs =  AVAudioSession.sharedInstance().currentRoute.outputs
+        for output in outputs {
+            print("345======== output type: \(output.portType.rawValue), name: \(output.portName)")
+        }
     }
 }
 
