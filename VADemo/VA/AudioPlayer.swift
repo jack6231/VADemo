@@ -11,20 +11,22 @@ import CallKit
 
 class AudioPlayer: NSObject {
     
-    private(set) lazy var avSpeechSynthesizer: AVSpeechSynthesizer = {
-        let speech = AVSpeechSynthesizer()
-        speech.delegate = self
-        return speech
-    }()
+    private(set) var avSpeechSynthesizer: AVSpeechSynthesizer?
+    
     private let locale = Locale(identifier: "en-US")
     
     func ttsPlayWith(voiceText: String) {
-        AVAudioSession.printAudioSessionProperties()
+        let avSpeechSynthesizer = AVSpeechSynthesizer()
+        avSpeechSynthesizer.delegate = self
         let voiceMessage = AVSpeechUtterance(string: voiceText)
         voiceMessage.volume = 1.0
         voiceMessage.voice = AVSpeechSynthesisVoice(language: locale.identifier)
-        self.avSpeechSynthesizer.speak(voiceMessage)
-        AVAudioSession.printAudioSessionProperties()
+        avSpeechSynthesizer.speak(voiceMessage)
+        self.avSpeechSynthesizer = avSpeechSynthesizer
+    }
+    
+    deinit {
+        print("345======== Audioplay deinit ==")
     }
 }
 
@@ -32,16 +34,18 @@ extension AudioPlayer: AVSpeechSynthesizerDelegate {
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
         print("345======== 语音播报开始")
-        AVAudioSession.printAudioSessionProperties()
     }
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
         print("345======== 语音播报暂停")
+//        synthesizer.continueSpeaking()
+//        try? AVAudioSession.sharedInstance().setActive(true)
     }
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
-        print("345======== 语音播报 \(characterRange)")
-        //AVAudioSession.printAudioSessionProperties()
+        let totalLength = utterance.speechString.count
+        let isFinish = characterRange.location + characterRange.length >= totalLength
+        print("345======== 语音播报 \(characterRange), isFinish: \(isFinish)")
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
@@ -50,26 +54,13 @@ extension AudioPlayer: AVSpeechSynthesizerDelegate {
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         print("345======== 语音播报完成")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // 延迟 1 秒
-            AVAudioSession.printAudioSessionProperties()
+        AVAudioSession.printAudioSessionProperties()
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
             do {
                 print("345======== set active false")
                 try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-                AVAudioSession.printAudioSessionProperties()
             } catch {
-                print("345======== set active false error:\(error)")
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                let speech = AVSpeechSynthesizer()
-                let voiceMessage = AVSpeechUtterance(string: "bey")
-                voiceMessage.volume = 0
-                speech.speak(voiceMessage)
-                AVAudioSession.printAudioSessionProperties()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    AVAudioSession.printAudioSessionProperties()
-                    try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-                    AVAudioSession.printAudioSessionProperties()
-                }
+                print("345======== set active false 失败: \(error)")
             }
         }
     }

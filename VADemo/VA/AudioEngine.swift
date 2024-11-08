@@ -112,5 +112,9 @@ class AudioEngine: NSObject {
             print("345======== output type: \(output.portType.rawValue), name: \(output.portName)")
         }
     }
+    
+    deinit {
+        print("345======== AudioEngine deinit ==")
+    }
 }
 

@@ -13,12 +13,12 @@ extension AVAudioSession {
     
     public static func printAudioSessionProperties() {
         let audioSession = AVAudioSession.sharedInstance()
-        
+
         // Category
-        let category = "Category: \(audioSession.category.rawValue)"
-        
+        let category = "Category: \(audioSession.category.rawValue.replacingOccurrences(of: "AVAudioSessionCategory", with: "."))"
+
         // Mode
-        let mode = "Mode: \(audioSession.mode.rawValue)"
+        let mode = "Mode: \(audioSession.mode.rawValue.replacingOccurrences(of: "AVAudioSessionMode", with: "."))"
         
         // Options - 构建包含每个选项的字符串
         var options = "Options: "
@@ -52,10 +52,10 @@ extension AVAudioSession {
         options = options.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: [","])
 
         // Route Sharing Policy
-        let routeSharingPolicy = "Route Sharing Policy: \(audioSession.routeSharingPolicy.rawValue)"
+        // let routeSharingPolicy = "Route Sharing Policy: \(audioSession.routeSharingPolicy.rawValue)"
         
         // 组成一条打印信息
-        let completeOutput = "==== \(category) | \(mode) | \(options) | \(routeSharingPolicy)"
+        let completeOutput = "==== \(category), \(mode), \(options)"
         
         // 打印
         print(completeOutput)
