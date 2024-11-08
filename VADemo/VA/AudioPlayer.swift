@@ -11,18 +11,21 @@ import CallKit
 
 class AudioPlayer: NSObject {
     
-    private(set) var avSpeechSynthesizer: AVSpeechSynthesizer?
+    private(set) var avSpeechSynthesizer: AVSpeechSynthesizer
     
     private let locale = Locale(identifier: "en-US")
     
-    func ttsPlayWith(voiceText: String) {
-        let avSpeechSynthesizer = AVSpeechSynthesizer()
+    override init() {
+        avSpeechSynthesizer = AVSpeechSynthesizer()
+        super.init()
         avSpeechSynthesizer.delegate = self
+    }
+    
+    func ttsPlayWith(voiceText: String) {
         let voiceMessage = AVSpeechUtterance(string: voiceText)
         voiceMessage.volume = 1.0
         voiceMessage.voice = AVSpeechSynthesisVoice(language: locale.identifier)
         avSpeechSynthesizer.speak(voiceMessage)
-        self.avSpeechSynthesizer = avSpeechSynthesizer
     }
     
     deinit {

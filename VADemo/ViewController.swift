@@ -81,7 +81,7 @@ class ViewController: UIViewController {
     }()
     
     private var audioEngine: AudioEngine?
-    private var audioPlayer: AudioPlayer?
+    private var audioPlayer = AudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,8 +166,7 @@ class ViewController: UIViewController {
         clickStopButton()
         clickSetActiveFalseButton()
         clickSetPlayStatusButton()
-        audioPlayer = AudioPlayer()
-        audioPlayer?.ttsPlayWith(voiceText: "What separates the winners from the losers is how a person reacts to each new twist of fate.")
+        audioPlayer.ttsPlayWith(voiceText: "What separates the winners from the losers is how a person reacts to each new twist of fate.")
         AVAudioSession.printAudioSessionProperties()
     }
     
@@ -228,7 +227,6 @@ class ViewController: UIViewController {
     
     @objc private func clickSetActiveFalseButton() {
         AVAudioSession.printAudioSessionProperties()
-        audioPlayer = nil
         do {
             print("345======== set active false")
             try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
