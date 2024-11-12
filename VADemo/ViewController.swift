@@ -123,6 +123,7 @@ class ViewController: UIViewController {
     @objc private func stopRecording() {
         print("345======== 停止录音")
         audioEngine?.stop()
+        audioEngine = nil
 //        do {
 //            print("345======== set category soloAmbient")
 //            try AVAudioSession.sharedInstance().setCategory(.soloAmbient, mode: .default, options:[])

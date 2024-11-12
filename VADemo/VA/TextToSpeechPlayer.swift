@@ -15,7 +15,44 @@ class TextToSpeechPlayer: NSObject {
         self.audioEngine = AVAudioEngine()
         self.playerNode = AVAudioPlayerNode()
         super.init()
+        addNotifications()
     }
+    
+    private func addNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(audioEngineConfigChanged(noti:)), name: Notification.Name.AVAudioEngineConfigurationChange, object: audioEngine)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioSessionInterruption(noti:)), name: AVAudioSession.interruptionNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioSessionRouteChanged(noti:)), name: AVAudioSession.routeChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleConfigurationChange), name: .AVAudioEngineConfigurationChange, object: nil)
+    }
+    
+    
+    @objc func handleConfigurationChange() {
+        print("345======== audio engine configeuration change")
+    }
+    
+    // 插拔耳机 断开/链接 蓝牙等
+    @objc private func audioEngineConfigChanged(noti: NSNotification) {
+        print("345======== audio engine 被打断1")
+    }
+    
+    // 被打断 闹钟 电话等
+    @objc private func audioSessionInterruption(noti: NSNotification) {
+        print("345======== audio engine 被打断2")
+        
+    }
+    //audio route 更换
+    @objc private func audioSessionRouteChanged(noti: Notification) {
+        print("345======== audio engine route change")
+        let outputs =  AVAudioSession.sharedInstance().currentRoute.outputs
+        for output in outputs {
+            print("345======== output type: \(output.portType.rawValue), name: \(output.portName)")
+        }
+    }
+    
+    deinit {
+        print("345======== TextToSpeechPlayer deinit ==")
+    }
+    
     
     func speak(text: String, completion: (() -> Void)? = nil) {
         self.completion = completion
