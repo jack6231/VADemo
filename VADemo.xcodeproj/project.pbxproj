@@ -11,6 +11,7 @@
 		042430112CE2392A0005D4E6 /* SpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 042430102CE2392A0005D4E6 /* SpeechSynthesizer.m */; };
 		042430162CE243840005D4E6 /* TextToSpeechManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042430152CE243840005D4E6 /* TextToSpeechManager.swift */; };
 		043FBA8F2CE301CD002DDCDC /* TextToSpeechPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FBA8E2CE301CD002DDCDC /* TextToSpeechPlayer.swift */; };
+		043FBA912CE35664002DDCDC /* TextToSpeechPlayer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FBA902CE35664002DDCDC /* TextToSpeechPlayer2.swift */; };
 		04873B4C2CE22EB300B12104 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04873B4B2CE22EB300B12104 /* SpeechService.swift */; };
 		04873B562CE231A700B12104 /* AVAudioSession+CustomSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 04873B552CE231A700B12104 /* AVAudioSession+CustomSwizzling.m */; };
 		04D549682CDB3FDD00CCE517 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D549672CDB3FDD00CCE517 /* AppDelegate.swift */; };
@@ -53,6 +54,7 @@
 		042430102CE2392A0005D4E6 /* SpeechSynthesizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechSynthesizer.m; sourceTree = "<group>"; };
 		042430152CE243840005D4E6 /* TextToSpeechManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeechManager.swift; sourceTree = "<group>"; };
 		043FBA8E2CE301CD002DDCDC /* TextToSpeechPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeechPlayer.swift; sourceTree = "<group>"; };
+		043FBA902CE35664002DDCDC /* TextToSpeechPlayer2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeechPlayer2.swift; sourceTree = "<group>"; };
 		04873B4B2CE22EB300B12104 /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
 		04873B4D2CE2313200B12104 /* VADemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VADemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		04873B542CE231A700B12104 /* AVAudioSession+CustomSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+CustomSwizzling.h"; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				04873B552CE231A700B12104 /* AVAudioSession+CustomSwizzling.m */,
 				042430152CE243840005D4E6 /* TextToSpeechManager.swift */,
 				043FBA8E2CE301CD002DDCDC /* TextToSpeechPlayer.swift */,
+				043FBA902CE35664002DDCDC /* TextToSpeechPlayer2.swift */,
 			);
 			path = VA;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				04D549682CDB3FDD00CCE517 /* AppDelegate.swift in Sources */,
 				04E1D4032CDB4EA400B42BFB /* AudioPlayer.swift in Sources */,
 				04E1D4012CDB4D1200B42BFB /* AudioEngine.swift in Sources */,
+				043FBA912CE35664002DDCDC /* TextToSpeechPlayer2.swift in Sources */,
 				04873B4C2CE22EB300B12104 /* SpeechService.swift in Sources */,
 				04D5496A2CDB3FDD00CCE517 /* SceneDelegate.swift in Sources */,
 				042430112CE2392A0005D4E6 /* SpeechSynthesizer.m in Sources */,

@@ -171,7 +171,7 @@ class ViewController: UIViewController {
 //        }
         
         
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .voicePrompt)
         try? AVAudioSession.sharedInstance().setActive(true)
         
         speechPlayer.speak(text: text) {

@@ -15,53 +15,15 @@ class TextToSpeechPlayer: NSObject {
         self.audioEngine = AVAudioEngine()
         self.playerNode = AVAudioPlayerNode()
         super.init()
-        addNotifications()
     }
-    
-    private func addNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(audioEngineConfigChanged(noti:)), name: Notification.Name.AVAudioEngineConfigurationChange, object: audioEngine)
-        NotificationCenter.default.addObserver(self, selector: #selector(audioSessionInterruption(noti:)), name: AVAudioSession.interruptionNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(audioSessionRouteChanged(noti:)), name: AVAudioSession.routeChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleConfigurationChange), name: .AVAudioEngineConfigurationChange, object: nil)
-    }
-    
-    
-    @objc func handleConfigurationChange() {
-        print("345======== audio engine configeuration change")
-    }
-    
-    // 插拔耳机 断开/链接 蓝牙等
-    @objc private func audioEngineConfigChanged(noti: NSNotification) {
-        print("345======== audio engine 被打断1")
-    }
-    
-    // 被打断 闹钟 电话等
-    @objc private func audioSessionInterruption(noti: NSNotification) {
-        print("345======== audio engine 被打断2")
-        
-    }
-    //audio route 更换
-    @objc private func audioSessionRouteChanged(noti: Notification) {
-        print("345======== audio engine route change")
-        let outputs =  AVAudioSession.sharedInstance().currentRoute.outputs
-        for output in outputs {
-            print("345======== output type: \(output.portType.rawValue), name: \(output.portName)")
-        }
-    }
-    
-    deinit {
-        print("345======== TextToSpeechPlayer deinit ==")
-    }
-    
-    
-    func speak(text: String, completion: (() -> Void)? = nil) {
+   
+    func speak(text: String, rate: Float = AVSpeechUtteranceDefaultSpeechRate, completion: (() -> Void)? = nil) {
         self.completion = completion
         
         // 确保播放器节点已准备好
         playerNode.stop()
         audioEngine.stop()
         audioEngine.reset()
-        
         // 重置调度组
         dispatchGroup.notify(queue: .main) { }
         
@@ -69,22 +31,33 @@ class TextToSpeechPlayer: NSObject {
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 根据需要设置语言
         utterance.volume = 1
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        self.setupAudioEngine()
         
         speechSynthesizer.write(utterance) { [weak self] buffer in
             guard let self = self else { return }
             
             if let pcmBuffer = buffer as? AVAudioPCMBuffer, pcmBuffer.frameLength > 0 {
-                // 第一次收到缓冲区时，设置音频引擎
-                if !self.audioEngine.isRunning {
-                    self.setupAudioEngine(with: pcmBuffer.format)
+                // 获取 playerNode 的输出格式
+                let playerFormat = self.playerNode.outputFormat(forBus: 0)
+                
+                if pcmBuffer.format != playerFormat {
+                    self.dispatchGroup.enter()
+                    guard let convertedBuffer = pcmBuffer.convert(to: playerFormat) else {
+                        print("345======== 采样率转换失败")
+                        return
+                    }
+                    
+                    self.playerNode.scheduleBuffer(convertedBuffer) {
+                        // 缓冲区播放完成，离开调度组
+                        self.dispatchGroup.leave()
+                    }
                 }
-                
-                // 进入调度组
-                self.dispatchGroup.enter()
-                
-                self.playerNode.scheduleBuffer(pcmBuffer) {
-                    // 缓冲区播放完成，离开调度组
-                    self.dispatchGroup.leave()
+                else {
+                    // 格式一致，直接调度缓冲区
+                    self.dispatchGroup.enter()
+                    self.playerNode.scheduleBuffer(pcmBuffer) {
+                        self.dispatchGroup.leave()
+                    }
                 }
             } else {
                 // 所有缓冲区都已提供，开始监听调度组的完成状态
@@ -98,9 +71,10 @@ class TextToSpeechPlayer: NSObject {
         }
     }
     
-    private func setupAudioEngine(with format: AVAudioFormat) {
+    private func setupAudioEngine() {
+        
         audioEngine.attach(playerNode)
-        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: format)
+        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: nil)
         do {
             try audioEngine.start()
             print("345======== 音频引擎启动成功")
@@ -115,5 +89,38 @@ class TextToSpeechPlayer: NSObject {
         playerNode.stop()
         audioEngine.stop()
         speechSynthesizer.stopSpeaking(at: .immediate)
+    }
+}
+
+extension AVAudioPCMBuffer {
+    /// 将当前 AVAudioPCMBuffer 转换为指定采样率和格式的新的 AVAudioPCMBuffer
+    /// - Parameters:
+    ///   - targetFormat: 目标音频格式，包含目标采样率和通道数等信息
+    /// - Returns: 转换后的 AVAudioPCMBuffer，如果转换失败则返回 nil
+    func convert(to targetFormat: AVAudioFormat) -> AVAudioPCMBuffer? {
+        // 创建转换器，从当前格式转换到目标格式
+        guard let converter = AVAudioConverter(from: self.format, to: targetFormat) else {
+            print("无法创建 AVAudioConverter")
+            return nil
+        }
+        
+        // 计算转换后的帧数
+        let ratio = Double(targetFormat.sampleRate) / self.format.sampleRate
+        let outputFrameCapacity = AVAudioFrameCount(Double(self.frameLength) * ratio)
+        
+        // 创建输出缓冲区
+        guard let outputBuffer = AVAudioPCMBuffer(pcmFormat: targetFormat, frameCapacity: outputFrameCapacity) else {
+            print("无法创建输出 AVAudioPCMBuffer")
+            return nil
+        }
+        
+        // 创建输入输出缓冲区的 AudioBufferList
+        let inputBlock: AVAudioConverterInputBlock = { inNumPackets, outStatus in
+            outStatus.pointee = .haveData
+            return self
+        }
+        
+        converter.convert(to: outputBuffer, error: nil, withInputFrom: inputBlock)
+        return outputBuffer
     }
 }
