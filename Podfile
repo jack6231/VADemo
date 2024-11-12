@@ -6,6 +6,7 @@ target 'VADemo' do
   use_frameworks!
   
   pod 'SnapKit', '~> 5.7.1'
+  pod 'MicrosoftCognitiveServicesSpeech-iOS', '1.35.0'
   
   target 'VADemoTests' do
     inherit! :search_paths

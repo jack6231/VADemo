@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0424300E2CE235A50005D4E6 /* TTSPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0424300D2CE235A50005D4E6 /* TTSPlayer.swift */; };
+		042430112CE2392A0005D4E6 /* SpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 042430102CE2392A0005D4E6 /* SpeechSynthesizer.m */; };
+		042430162CE243840005D4E6 /* TextToSpeechManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042430152CE243840005D4E6 /* TextToSpeechManager.swift */; };
+		043FBA8F2CE301CD002DDCDC /* TextToSpeechPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FBA8E2CE301CD002DDCDC /* TextToSpeechPlayer.swift */; };
+		04873B4C2CE22EB300B12104 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04873B4B2CE22EB300B12104 /* SpeechService.swift */; };
+		04873B562CE231A700B12104 /* AVAudioSession+CustomSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 04873B552CE231A700B12104 /* AVAudioSession+CustomSwizzling.m */; };
 		04D549682CDB3FDD00CCE517 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D549672CDB3FDD00CCE517 /* AppDelegate.swift */; };
 		04D5496A2CDB3FDD00CCE517 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D549692CDB3FDD00CCE517 /* SceneDelegate.swift */; };
 		04D5496C2CDB3FDD00CCE517 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D5496B2CDB3FDD00CCE517 /* ViewController.swift */; };
@@ -42,6 +48,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0424300D2CE235A50005D4E6 /* TTSPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSPlayer.swift; sourceTree = "<group>"; };
+		0424300F2CE2392A0005D4E6 /* SpeechSynthesizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeechSynthesizer.h; sourceTree = "<group>"; };
+		042430102CE2392A0005D4E6 /* SpeechSynthesizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechSynthesizer.m; sourceTree = "<group>"; };
+		042430152CE243840005D4E6 /* TextToSpeechManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeechManager.swift; sourceTree = "<group>"; };
+		043FBA8E2CE301CD002DDCDC /* TextToSpeechPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeechPlayer.swift; sourceTree = "<group>"; };
+		04873B4B2CE22EB300B12104 /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
+		04873B4D2CE2313200B12104 /* VADemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VADemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		04873B542CE231A700B12104 /* AVAudioSession+CustomSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+CustomSwizzling.h"; sourceTree = "<group>"; };
+		04873B552CE231A700B12104 /* AVAudioSession+CustomSwizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAudioSession+CustomSwizzling.m"; sourceTree = "<group>"; };
 		04A21D302CDB47CC005B138A /* Masonry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Masonry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D549642CDB3FDD00CCE517 /* VADemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VADemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D549672CDB3FDD00CCE517 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -155,9 +170,18 @@
 		04E1D3FA2CDB4C4700B42BFB /* VA */ = {
 			isa = PBXGroup;
 			children = (
+				04873B4D2CE2313200B12104 /* VADemo-Bridging-Header.h */,
 				04E1D4002CDB4D1200B42BFB /* AudioEngine.swift */,
 				04E1D4022CDB4EA400B42BFB /* AudioPlayer.swift */,
 				04E1D4042CDC60D000B42BFB /* AudioSession.swift */,
+				04873B4B2CE22EB300B12104 /* SpeechService.swift */,
+				0424300D2CE235A50005D4E6 /* TTSPlayer.swift */,
+				0424300F2CE2392A0005D4E6 /* SpeechSynthesizer.h */,
+				042430102CE2392A0005D4E6 /* SpeechSynthesizer.m */,
+				04873B542CE231A700B12104 /* AVAudioSession+CustomSwizzling.h */,
+				04873B552CE231A700B12104 /* AVAudioSession+CustomSwizzling.m */,
+				042430152CE243840005D4E6 /* TextToSpeechManager.swift */,
+				043FBA8E2CE301CD002DDCDC /* TextToSpeechPlayer.swift */,
 			);
 			path = VA;
 			sourceTree = "<group>";
@@ -259,6 +283,7 @@
 				TargetAttributes = {
 					04D549632CDB3FDD00CCE517 = {
 						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1530;
 					};
 					04D549792CDB3FDE00CCE517 = {
 						CreatedOnToolsVersion = 15.3;
@@ -429,8 +454,14 @@
 				04D549682CDB3FDD00CCE517 /* AppDelegate.swift in Sources */,
 				04E1D4032CDB4EA400B42BFB /* AudioPlayer.swift in Sources */,
 				04E1D4012CDB4D1200B42BFB /* AudioEngine.swift in Sources */,
+				04873B4C2CE22EB300B12104 /* SpeechService.swift in Sources */,
 				04D5496A2CDB3FDD00CCE517 /* SceneDelegate.swift in Sources */,
+				042430112CE2392A0005D4E6 /* SpeechSynthesizer.m in Sources */,
+				043FBA8F2CE301CD002DDCDC /* TextToSpeechPlayer.swift in Sources */,
+				04873B562CE231A700B12104 /* AVAudioSession+CustomSwizzling.m in Sources */,
+				042430162CE243840005D4E6 /* TextToSpeechManager.swift in Sources */,
 				04E1D4052CDC60D000B42BFB /* AudioSession.swift in Sources */,
+				0424300E2CE235A50005D4E6 /* TTSPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +642,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HM2XFJ76LK;
@@ -631,6 +663,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Trucker-Path-Pro-Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "VADemo/VA/VADemo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -642,6 +676,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HM2XFJ76LK;
@@ -662,6 +697,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Trucker-Path-Pro-Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "VADemo/VA/VADemo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

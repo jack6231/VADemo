@@ -7,7 +7,6 @@
 
 import UIKit
 import AVFoundation
-import CallKit
 
 class AudioPlayer: NSObject {
     
@@ -46,9 +45,9 @@ extension AudioPlayer: AVSpeechSynthesizerDelegate {
     }
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
-        let totalLength = utterance.speechString.count
-        let isFinish = characterRange.location + characterRange.length >= totalLength
-        print("345======== 语音播报 \(characterRange), isFinish: \(isFinish)")
+//        let totalLength = utterance.speechString.count
+//        let isFinish = characterRange.location + characterRange.length >= totalLength
+//        print("345======== 语音播报 \(characterRange), isFinish: \(isFinish)")
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
@@ -59,6 +58,12 @@ extension AudioPlayer: AVSpeechSynthesizerDelegate {
         print("345======== 语音播报完成")
         AVAudioSession.printAudioSessionProperties()
         DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+//            do {
+//                print("345======== set categor soloAmbient")
+//                try AVAudioSession.sharedInstance().setCategory(.soloAmbient, mode: .default)
+//            } catch {
+//                print("345======== set categor playAndRecord error: \(error)")
+//            }
             do {
                 print("345======== set active false")
                 try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
