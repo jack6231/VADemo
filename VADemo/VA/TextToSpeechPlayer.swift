@@ -1,11 +1,60 @@
 import Foundation
 import AVFoundation
 
+// 定义代理协议
+protocol TextToSpeechPlayerDelegate: AnyObject {
+    /// 开始播报
+    func textToSpeechPlayerDidStartPlaying(_ player: TextToSpeechPlayer)
+    
+    /// 播报完成
+    func textToSpeechPlayerDidFinishPlaying(_ player: TextToSpeechPlayer)
+    
+    /// 播报被暂停
+    func textToSpeechPlayerDidPausePlaying(_ player: TextToSpeechPlayer)
+    
+    /// 播报失败
+    func textToSpeechPlayer(_ player: TextToSpeechPlayer, didFailWithError error: TextToSpeechPlayerError)
+}
+
+// 定义错误类型
+enum TextToSpeechPlayerError: Error {
+    case audioSessionInitializationFailed(error: Error)
+    case audioEngineStartFailed(error: Error)
+    case speechSynthesizerError(error: Error)
+    case playbackFailed(error: Error)
+    case interruptionCannotResume
+    case unknown
+}
+
+extension TextToSpeechPlayerError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .audioSessionInitializationFailed(let error):
+            return "Audio session initialization failed: \(error.localizedDescription)"
+        case .audioEngineStartFailed(let error):
+            return "Audio engine failed to start: \(error.localizedDescription)"
+        case .speechSynthesizerError(let error):
+            return "Speech synthesis failed: \(error.localizedDescription)"
+        case .playbackFailed(let error):
+            return "Playback failed: \(error.localizedDescription)"
+        case .interruptionCannotResume:
+            return "Interruption ended, but playback cannot resume"
+        case .unknown:
+            return "Unknown error"
+        }
+    }
+}
+
 class TextToSpeechPlayer: NSObject {
+    
+    public weak var delegate: TextToSpeechPlayerDelegate?
+    public var isPlaying: Bool {
+        playerNode.isPlaying
+    }
+    
     private var speechSynthesizer: AVSpeechSynthesizer
     private var audioEngine: AVAudioEngine
     private var playerNode: AVAudioPlayerNode
-    private var completion: (() -> Void)?
     
     // 调度组，用于跟踪缓冲区的播放状态
     private let dispatchGroup = DispatchGroup()
@@ -15,24 +64,27 @@ class TextToSpeechPlayer: NSObject {
         self.audioEngine = AVAudioEngine()
         self.playerNode = AVAudioPlayerNode()
         super.init()
-    }
-   
-    func speak(text: String, rate: Float = AVSpeechUtteranceDefaultSpeechRate, completion: (() -> Void)? = nil) {
-        self.completion = completion
         
+        // 添加音频会话中断通知的监听
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    public func speak(text: String, rate: Float = AVSpeechUtteranceDefaultSpeechRate) {
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 根据需要设置语言
+        utterance.volume = 1
+        utterance.rate = rate // 使用传入的 rate
+        speak(utterance: utterance)
+    }
+    
+    public func speak(utterance: AVSpeechUtterance) {
         // 确保播放器节点已准备好
         playerNode.stop()
         audioEngine.stop()
         audioEngine.reset()
         // 重置调度组
         dispatchGroup.notify(queue: .main) { }
-        
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 根据需要设置语言
-        utterance.volume = 1
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
         self.setupAudioEngine()
-        
         speechSynthesizer.write(utterance) { [weak self] buffer in
             guard let self = self else { return }
             
@@ -44,6 +96,7 @@ class TextToSpeechPlayer: NSObject {
                     self.dispatchGroup.enter()
                     guard let convertedBuffer = pcmBuffer.convert(to: playerFormat) else {
                         print("345======== 采样率转换失败")
+                        self.delegate?.textToSpeechPlayer(self, didFailWithError: .playbackFailed(error: NSError(domain: "转换失败", code: -1, userInfo: nil)))
                         return
                     }
                     
@@ -62,17 +115,23 @@ class TextToSpeechPlayer: NSObject {
             } else {
                 // 所有缓冲区都已提供，开始监听调度组的完成状态
                 self.dispatchGroup.notify(queue: .main) {
-                    // 所有缓冲区都已播放完成，调用播放完成回调
+                    // 播放完成
                     print("345======== 播放完成")
                     self.stop()
-                    self.completion?()
+                    self.delegate?.textToSpeechPlayerDidFinishPlaying(self)
                 }
             }
         }
     }
     
+    public func stop() {
+        playerNode.stop()
+        audioEngine.stop()
+        speechSynthesizer.stopSpeaking(at: .immediate)
+    }
+    
     private func setupAudioEngine() {
-        
+        // 配置音频会话
         audioEngine.attach(playerNode)
         audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: nil)
         do {
@@ -80,18 +139,82 @@ class TextToSpeechPlayer: NSObject {
             print("345======== 音频引擎启动成功")
             // 启动播放器节点
             playerNode.play()
+            // 通知代理开始播报
+            delegate?.textToSpeechPlayerDidStartPlaying(self)
         } catch {
             print("345======== 无法启动音频引擎: \(error)")
+            delegate?.textToSpeechPlayer(self, didFailWithError: .audioEngineStartFailed(error: error))
         }
     }
     
-    func stop() {
-        playerNode.stop()
-        audioEngine.stop()
-        speechSynthesizer.stopSpeaking(at: .immediate)
+    public func configureAudioSession() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            // 设置音频会话类别和模式
+            try audioSession.setCategory(.playback, mode: .default, options: [.allowBluetooth, .defaultToSpeaker])
+            try audioSession.setActive(true)
+            print("345======== 音频会话配置成功")
+        } catch {
+            print("345======== 音频会话配置失败: \(error)")
+            delegate?.textToSpeechPlayer(self, didFailWithError: .audioSessionInitializationFailed(error: error))
+        }
+    }
+    
+    @objc private func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+            return
+        }
+        switch type {
+        case .began:
+            // 中断开始，暂停播放
+            print("345======== 音频中断开始")
+            if playerNode.isPlaying {
+                playerNode.pause()
+                // 通知代理播报被暂停
+                delegate?.textToSpeechPlayerDidPausePlaying(self)
+            }
+        case .ended:
+            /*
+            print("音频中断结束")
+            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
+                let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                if options.contains(.shouldResume) {
+                    // 恢复音频会话
+                    do {
+                        try AVAudioSession.sharedInstance().setActive(true)
+                        // 恢复音频引擎和播放器节点
+                        if !self.audioEngine.isRunning {
+                            try self.audioEngine.start()
+                        }
+                        self.playerNode.play()
+                        print("恢复播放")
+                        // 通知代理开始播报
+                        delegate?.textToSpeechPlayerDidStartPlaying(self)
+                    } catch {
+                        print("无法恢复音频会话: \(error)")
+                        delegate?.textToSpeechPlayer(self, didFailWithError: .audioEngineStartFailed(error: error))
+                    }
+                } else {
+                    // 中断结束，但不应恢复播放
+                    print("中断结束，但不应恢复播放")
+                    self.delegate?.textToSpeechPlayer(self, didFailWithError: .interruptionCannotResume)
+                    self.stop()
+                }
+            }*/
+            break
+        default:
+            break
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
+// AVAudioPCMBuffer 的扩展，用于采样率转换
 extension AVAudioPCMBuffer {
     /// 将当前 AVAudioPCMBuffer 转换为指定采样率和格式的新的 AVAudioPCMBuffer
     /// - Parameters:
@@ -100,17 +223,17 @@ extension AVAudioPCMBuffer {
     func convert(to targetFormat: AVAudioFormat) -> AVAudioPCMBuffer? {
         // 创建转换器，从当前格式转换到目标格式
         guard let converter = AVAudioConverter(from: self.format, to: targetFormat) else {
-            print("无法创建 AVAudioConverter")
+            print("345======== 无法创建 AVAudioConverter")
             return nil
         }
         
         // 计算转换后的帧数
-        let ratio = Double(targetFormat.sampleRate) / self.format.sampleRate
+        let ratio = targetFormat.sampleRate / self.format.sampleRate
         let outputFrameCapacity = AVAudioFrameCount(Double(self.frameLength) * ratio)
         
         // 创建输出缓冲区
         guard let outputBuffer = AVAudioPCMBuffer(pcmFormat: targetFormat, frameCapacity: outputFrameCapacity) else {
-            print("无法创建输出 AVAudioPCMBuffer")
+            print("345======== 无法创建输出 AVAudioPCMBuffer")
             return nil
         }
         

@@ -40,8 +40,6 @@ extension AudioPlayer: AVSpeechSynthesizerDelegate {
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
         print("345======== 语音播报暂停")
-//        synthesizer.continueSpeaking()
-//        try? AVAudioSession.sharedInstance().setActive(true)
     }
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
@@ -58,12 +56,6 @@ extension AudioPlayer: AVSpeechSynthesizerDelegate {
         print("345======== 语音播报完成")
         AVAudioSession.printAudioSessionProperties()
         DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-//            do {
-//                print("345======== set categor soloAmbient")
-//                try AVAudioSession.sharedInstance().setCategory(.soloAmbient, mode: .default)
-//            } catch {
-//                print("345======== set categor playAndRecord error: \(error)")
-//            }
             do {
                 print("345======== set active false")
                 try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)

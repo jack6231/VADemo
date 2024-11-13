@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     
     private lazy var stopRecordButton: UIButton = {
         let button = UIButton()
-        button.setTitle("停止录音", for: .normal)
+        button.setTitle("停止", for: .normal)
         button.backgroundColor = UIColor.systemRed
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(stopRecording), for: .touchUpInside)
@@ -121,27 +121,13 @@ class ViewController: UIViewController {
     }
     
     @objc private func stopRecording() {
-        print("345======== 停止录音")
-        audioEngine?.stop()
-        audioEngine = nil
-//        do {
-//            print("345======== set category soloAmbient")
-//            try AVAudioSession.sharedInstance().setCategory(.soloAmbient, mode: .default, options:[])
-//        } catch {
-//            print("345======== set category soloAmbient error: \(error)")
-//        }
-//        do {
-//            print("345======== set active false")
-//            try AVAudioSession.sharedInstance().setActive(false)
-//        } catch {
-//            print("345======== set active false 失败: \(error)")
-//        }
+        speechPlayer.stop()
+
     }
     
     @objc private func clickPlayButton(sender: UIButton) {
         audioEngine?.stop()
-        audioEngine = nil
-        AVAudioSession.printAudioSessionProperties()
+//        AVAudioSession.printAudioSessionProperties()
 //        do {
 //            print("345======== set category playback")
 //            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .voicePrompt, options: [.mixWithOthers])
@@ -154,7 +140,7 @@ class ViewController: UIViewController {
 //        } catch {
 //            print("345======== set active true 失败: \(error)")
 //        }
-        let text = "What separates the winners from the losers is how a person reacts to each new twist of fate."
+        let text = "What separates the winners from the losers is how a person reacts to each new twist of fate.What separates the winners from the losers is how a person reacts to each new twist of fate.What separates the winners from the losers is how a person reacts to each new twist of fate."
 //        let manager = TextToSpeechManager.shared
 //        manager.textToSpeech(text: text) { url, error in
 //            if let url = url {
@@ -171,12 +157,10 @@ class ViewController: UIViewController {
 //        }
         
         
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .voicePrompt)
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .voicePrompt, options: [])
         try? AVAudioSession.sharedInstance().setActive(true)
         
-        speechPlayer.speak(text: text) {
-            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-        }
+        speechPlayer.speak(text: text)
 
         
 //        audioPlayer.ttsPlayWith(voiceText: text)
@@ -190,6 +174,6 @@ class ViewController: UIViewController {
 //                print("345======== set active false 失败: \(error)")
 //            }
 //        }
-        AVAudioSession.printAudioSessionProperties()
+//        AVAudioSession.printAudioSessionProperties()
     }
 }
