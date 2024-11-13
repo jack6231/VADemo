@@ -84,17 +84,20 @@ class TextToSpeechPlayer: NSObject {
         audioEngine.reset()
         // 重置调度组
         dispatchGroup.notify(queue: .main) { }
-        self.setupAudioEngine()
         speechSynthesizer.write(utterance) { [weak self] buffer in
             guard let self = self else { return }
             
             if let pcmBuffer = buffer as? AVAudioPCMBuffer, pcmBuffer.frameLength > 0 {
                 // 获取 playerNode 的输出格式
                 let playerFormat = self.playerNode.outputFormat(forBus: 0)
-                
-                if pcmBuffer.format != playerFormat {
+                let pcmFormat = pcmBuffer.format
+                if  pcmFormat != playerFormat {
                     self.dispatchGroup.enter()
-                    guard let convertedBuffer = pcmBuffer.convert(to: playerFormat) else {
+                    let format = AVAudioFormat(commonFormat: playerFormat.commonFormat, sampleRate:pcmFormat.sampleRate, channels: playerFormat.channelCount, interleaved: false) ?? playerFormat
+                    if !audioEngine.isRunning {
+                        self.setupAudioEngine(format: format)
+                    }
+                    guard let convertedBuffer = pcmBuffer.convert(to: format) else {
                         print("345======== 采样率转换失败")
                         self.delegate?.textToSpeechPlayer(self, didFailWithError: .playbackFailed(error: NSError(domain: "转换失败", code: -1, userInfo: nil)))
                         return
@@ -104,10 +107,11 @@ class TextToSpeechPlayer: NSObject {
                         // 缓冲区播放完成，离开调度组
                         self.dispatchGroup.leave()
                     }
-                }
-                else {
-                    // 格式一致，直接调度缓冲区
+                } else {
                     self.dispatchGroup.enter()
+                    if !audioEngine.isRunning {
+                        self.setupAudioEngine(format: pcmFormat)
+                    }
                     self.playerNode.scheduleBuffer(pcmBuffer) {
                         self.dispatchGroup.leave()
                     }
@@ -130,10 +134,10 @@ class TextToSpeechPlayer: NSObject {
         speechSynthesizer.stopSpeaking(at: .immediate)
     }
     
-    private func setupAudioEngine() {
+    private func setupAudioEngine(format: AVAudioFormat? = nil) {
         // 配置音频会话
         audioEngine.attach(playerNode)
-        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: nil)
+        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: format)
         do {
             try audioEngine.start()
             print("345======== 音频引擎启动成功")
@@ -144,19 +148,6 @@ class TextToSpeechPlayer: NSObject {
         } catch {
             print("345======== 无法启动音频引擎: \(error)")
             delegate?.textToSpeechPlayer(self, didFailWithError: .audioEngineStartFailed(error: error))
-        }
-    }
-    
-    public func configureAudioSession() {
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            // 设置音频会话类别和模式
-            try audioSession.setCategory(.playback, mode: .default, options: [.allowBluetooth, .defaultToSpeaker])
-            try audioSession.setActive(true)
-            print("345======== 音频会话配置成功")
-        } catch {
-            print("345======== 音频会话配置失败: \(error)")
-            delegate?.textToSpeechPlayer(self, didFailWithError: .audioSessionInitializationFailed(error: error))
         }
     }
     
