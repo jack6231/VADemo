@@ -140,27 +140,26 @@ class ViewController: UIViewController {
 //        } catch {
 //            print("345======== set active true 失败: \(error)")
 //        }
-        let text = "What separates the winners from the losers is how a person reacts to each new twist of fate.What separates the winners from the losers is how a person reacts to each new twist of fate.What separates the winners from the losers is how a person reacts to each new twist of fate."
-//        let manager = TextToSpeechManager.shared
-//        manager.textToSpeech(text: text) { url, error in
-//            if let url = url {
-//                print("语音合成成功，文件已保存到：\(url.path)")
-//                
-//                // 播放音频文件
-//                manager.playAudioFile(at: url) {
-//                    print("播放完成")
-//                    try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-//                }
-//            } else {
-//                print("语音合成失败：\(error?.localizedDescription ?? "未知错误")")
-//            }
-//        }
-        
-        
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .voicePrompt, options: [])
         try? AVAudioSession.sharedInstance().setActive(true)
         
-        speechPlayer.speak(text: text)
+        let text = "What separates the winners from the losers is how a person reacts to each new twist of fate.What separates the winners from the losers is how a person reacts to each new twist of fate.What separates the winners from the losers is how a person reacts to each new twist of fate."
+        let manager = TextToSpeechManager.shared
+        manager.textToSpeech(text: text) { url, error in
+            if let url = url {
+                print("语音合成成功，文件已保存到：\(url.path)")
+                
+                // 播放音频文件
+                manager.playAudioFile(at: url) {
+                    print("播放完成")
+                    try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+                }
+            } else {
+                print("语音合成失败：\(error?.localizedDescription ?? "未知错误")")
+            }
+        }
+        
+//        speechPlayer.speak(text: text)
 
         
 //        audioPlayer.ttsPlayWith(voiceText: text)

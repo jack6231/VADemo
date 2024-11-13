@@ -27,17 +27,18 @@ class TextToSpeechManager: NSObject, AVAudioPlayerDelegate {
         let outputURL = documentsURL.appendingPathComponent(fileName)
         
         let utterance = AVSpeechUtterance(string: text)
-        
-        // 使用传入的 language 参数
         utterance.voice = AVSpeechSynthesisVoice(language: language)
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate  // 设置语速
         
-        // 设置适当的语速
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate  // 或根据需要调整
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("345======== 音频会话配置失败：\(error.localizedDescription)")
+            completion(nil, error)
+            return
+        }
         
-        // 配置音频格式（将在回调中设置）
-        // 初始化音频文件将在回调中进行
-        
-        // 开始写入音频数据
         speechSynthesizer.write(utterance) { [weak self] buffer in
             guard let self = self else { return }
             
@@ -47,26 +48,38 @@ class TextToSpeechManager: NSObject, AVAudioPlayerDelegate {
                     if self.audioFile == nil {
                         let audioFormat = audioBuffer.format
                         self.audioFile = try AVAudioFile(forWriting: outputURL, settings: audioFormat.settings)
-                        print("音频文件初始化成功，保存路径：\(outputURL.path)")
+                        print("345======== 音频文件初始化成功，保存路径：\(outputURL.path)")
                     }
-                    try self.audioFile?.write(from: audioBuffer)
+                    
+                    // 确保音频缓冲区的格式与文件格式一致
+                    if let outputFormat = self.audioFile?.processingFormat, outputFormat != audioBuffer.format {
+                        guard let convertedBuffer = audioBuffer.convert2(to: outputFormat) else {
+                            print("345======== 音频缓冲区转换失败")
+                            return
+                        }
+                        try self.audioFile?.write(from: convertedBuffer)
+                    } else {
+                        try self.audioFile?.write(from: audioBuffer)
+                    }
+                    
                 } catch {
                     self.speechSynthesizer.stopSpeaking(at: .immediate)
                     DispatchQueue.main.async {
-                        print("写入音频文件时出错：\(error.localizedDescription)")
+                        print("345======== 写入音频文件时出错：\(error.localizedDescription)")
                         self.completionHandler?(nil, error)
                     }
                 }
             } else {
                 // 合成完成
-                DispatchQueue.main.async {
+                self.audioFile = nil // 关闭文件以确保保存
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     let fileExists = FileManager.default.fileExists(atPath: outputURL.path)
-                    print("合成完成，文件是否存在：\(fileExists)")
+                    print("345======== 合成完成，文件是否存在：\(fileExists)")
                     if fileExists {
-                        print("合成的音频文件路径：\(outputURL.path)")
+                        print("345======== 合成的音频文件路径：\(outputURL.path)")
                         self.completionHandler?(outputURL, nil)
                     } else {
-                        print("合成完成，但文件未生成。")
+                        print("345======== 合成完成，但文件未生成。")
                         self.completionHandler?(nil, NSError(domain: "TextToSpeechError", code: -1, userInfo: [NSLocalizedDescriptionKey: "音频文件未生成"]))
                     }
                 }
@@ -83,7 +96,7 @@ class TextToSpeechManager: NSObject, AVAudioPlayerDelegate {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            print("音频会话设置出错：\(error.localizedDescription)")
+            print("345======== 音频会话设置出错：\(error.localizedDescription)")
             return
         }
         
@@ -93,18 +106,38 @@ class TextToSpeechManager: NSObject, AVAudioPlayerDelegate {
             self.audioPlayer?.volume = 1.0
             self.audioPlayer?.prepareToPlay()
             if self.audioPlayer?.play() == true {
-                print("音频开始播放")
+                print("345======== 音频开始播放")
             } else {
-                print("音频播放失败")
+                print("345======== 音频播放失败")
             }
         } catch {
-            print("播放音频文件时出错：\(error.localizedDescription)")
+            print("345======== 播放音频文件时出错：\(error.localizedDescription)")
         }
     }
     
     /// AVAudioPlayerDelegate 方法：音频播放完成
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        print("音频播放完成")
+        print("345======== 音频播放完成")
         playCompletionHandler?()
+    }
+}
+
+// 添加 AVAudioPCMBuffer 的扩展用于转换
+extension AVAudioPCMBuffer {
+    func convert2(to targetFormat: AVAudioFormat) -> AVAudioPCMBuffer? {
+        guard let converter = AVAudioConverter(from: self.format, to: targetFormat) else {
+            print("345======== 无法创建格式转换器")
+            return nil
+        }
+        
+        let outputBuffer = AVAudioPCMBuffer(pcmFormat: targetFormat, frameCapacity: AVAudioFrameCount(Double(self.frameLength) * targetFormat.sampleRate / self.format.sampleRate))!
+        
+        let inputBlock: AVAudioConverterInputBlock = { inNumPackets, outStatus in
+            outStatus.pointee = .haveData
+            return self
+        }
+        
+        converter.convert(to: outputBuffer, error: nil, withInputFrom: inputBlock)
+        return outputBuffer
     }
 }
