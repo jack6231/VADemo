@@ -39,7 +39,11 @@ class ViewController: UIViewController {
     private var speechService = SpeechService()
     private var ttsPlayer = TTSPlayer()
     private var synthesizer = SpeechSynthesizer()
-    private let speechPlayer = TextToSpeechPlayer()
+    private lazy var speechPlayer: TextToSpeechPlayer = {
+        let player = TextToSpeechPlayer()
+        player.delegate = self
+        return player
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,5 +178,23 @@ class ViewController: UIViewController {
 //            }
 //        }
 //        AVAudioSession.printAudioSessionProperties()
+    }
+}
+
+extension ViewController: TextToSpeechPlayerDelegate {
+    func textToSpeechPlayerDidStartPlaying(_ player: TextToSpeechPlayer) {
+        
+    }
+    
+    func textToSpeechPlayerDidFinishPlaying(_ player: TextToSpeechPlayer) {
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+    }
+    
+    func textToSpeechPlayerDidPausePlaying(_ player: TextToSpeechPlayer) {
+        
+    }
+    
+    func textToSpeechPlayer(_ player: TextToSpeechPlayer, didFailWithError error: TextToSpeechPlayerError) {
+        
     }
 }
